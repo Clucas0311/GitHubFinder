@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import NavBar from "./components/layout/NavBar";
 import Users from "./components/users/Users";
 import Search from "./components/users/Search";
+import Alert from "./components/layout/Alert";
 import axios from "axios";
 import "./App.css";
 
@@ -11,6 +12,7 @@ class App extends Component {
     this.state = {
       users: [],
       loading: false,
+      alert: null,
     };
   }
   // Runs when the component first renders
@@ -34,6 +36,12 @@ class App extends Component {
     // take the users and set it to an empty array
     this.setState({ users: [], loading: false });
   };
+  // Set Alert
+  setAlert = (msg, type) => {
+    this.setState({ alert: { msg: msg, type: type } });
+    // sets a time on the alert for 5 secs then changes state back to null/original state
+    setTimeout(() => this.setState({ alert: null }), 5000);
+  };
   render() {
     const { users, loading } = this.state;
     return (
@@ -41,10 +49,12 @@ class App extends Component {
       <div className="App">
         <NavBar title="GitHub Finder" icon="fab fa-github" />
         <div className="container">
+          <Alert alert={this.state.alert} />
           <Search
             searchUsers={this.searchUsers}
             clearUsers={this.clearUsers}
             showClear={users.length > 0 ? true : false}
+            setAlert={this.setAlert}
           />
           <Users loading={loading} users={users} />
         </div>

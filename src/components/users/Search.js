@@ -13,15 +13,21 @@ class Search extends Component {
     searchUsers: PropTypes.func.isRequired,
     clearUsers: PropTypes.func.isRequired,
     showClear: PropTypes.bool.isRequired,
+    setAlert: PropTypes.func.isRequired,
   };
 
   onSubmit = (e) => {
     // On submits need e.prevent default to stop submitting/reloading page --> always use this with onSubmit
     e.preventDefault();
-    // Passing this prop up to App Component
-    this.props.searchUsers(this.state.text);
-    // This will clear our state, clearing out the text bar after submitting
-    this.setState({ text: "" });
+    // this sets an alert when the user doesn't input anything
+    if (this.state.text === "") {
+      this.props.setAlert("Please enter something", "light");
+    } else {
+      // Passing this prop up to App Component
+      this.props.searchUsers(this.state.text);
+      // This will clear our state, clearing out the text bar after submitting
+      this.setState({ text: "" });
+    }
   };
   // In order to use the text field we must use the onchange function this will render the component and allow you to write in the text field
   // e.target.name allows us to use onchange in multiple fields
