@@ -6,8 +6,8 @@ import axios from "axios";
 import "./App.css";
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       users: [],
       loading: false,
@@ -29,15 +29,24 @@ class App extends Component {
     );
     this.setState({ users: data.items, loading: false });
   };
-
+  // Clears the user from the state
+  clearUsers = () => {
+    // take the users and set it to an empty array
+    this.setState({ users: [], loading: false });
+  };
   render() {
+    const { users, loading } = this.state;
     return (
       // React.Fragment makes invisible divs
       <div className="App">
         <NavBar title="GitHub Finder" icon="fab fa-github" />
         <div className="container">
-          <Search searchUsers={this.searchUsers} />
-          <Users loading={this.state.loading} users={this.state.users} />
+          <Search
+            searchUsers={this.searchUsers}
+            clearUsers={this.clearUsers}
+            showClear={users.length > 0 ? true : false}
+          />
+          <Users loading={loading} users={users} />
         </div>
       </div>
     );

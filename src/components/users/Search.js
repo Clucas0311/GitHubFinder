@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class Search extends Component {
   constructor(props) {
@@ -7,6 +8,13 @@ class Search extends Component {
       text: "",
     };
   }
+  // Used proptypes to make these props available if proptypes wasn't declared
+  static propTypes = {
+    searchUsers: PropTypes.func.isRequired,
+    clearUsers: PropTypes.func.isRequired,
+    showClear: PropTypes.bool.isRequired,
+  };
+
   onSubmit = (e) => {
     // On submits need e.prevent default to stop submitting/reloading page --> always use this with onSubmit
     e.preventDefault();
@@ -22,6 +30,7 @@ class Search extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
   render() {
+    const { showClear, clearUsers } = this.props;
     return (
       <div>
         <form onSubmit={this.onSubmit} className="form">
@@ -39,6 +48,12 @@ class Search extends Component {
             className="btn btn-dark btn-block"
           />
         </form>
+        {/*This shows the clear button on when showClear is we have users */}
+        {showClear && (
+          <button className="btn btn-light btn-block" onClick={clearUsers}>
+            Clear
+          </button>
+        )}
       </div>
     );
   }
