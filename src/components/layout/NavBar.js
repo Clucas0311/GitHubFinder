@@ -1,5 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+// Use curly braces when export default is not used
+// To add link to the page using react router dom
+import { Link } from "react-router-dom";
 
 const NavBar = (props) => {
   const { title, icon } = props;
@@ -8,6 +11,15 @@ const NavBar = (props) => {
       <h1>
         <i className={icon} /> {title}
       </h1>
+      {/* Adding links to the page using link from react-router */}
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/about">About</Link>
+        </li>
+      </ul>
     </nav>
   );
 };
